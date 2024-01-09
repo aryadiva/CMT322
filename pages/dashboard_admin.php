@@ -1,9 +1,3 @@
-<?php // MySQL credentials
-$servername = "localhost";
-$database = "aryaqaru_cmt322";
-$username = "aryaqaru_arya_admin";
-$password = "[]wA?99cT?yz";
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +25,7 @@ $password = "[]wA?99cT?yz";
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-  <?php include("sidebar.php");?>
+  <? include("sidebar.php")?>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
@@ -185,32 +179,10 @@ $password = "[]wA?99cT?yz";
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">
-                        Total Users
-                    </p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Users</p>
                     <h5 class="font-weight-bolder mb-0">
-                      <?php
-                        $con = mysqli_connect($servername, $username, $password, $database);
-                        
-                        // Check connection
-                        if (mysqli_connect_errno())
-                          {
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                          }
-                        
-                        $sql="SELECT userid FROM users";
-                        
-                        if ($result=mysqli_query($con,$sql))
-                          {
-                          // Return the number of rows in result set
-                          $rowcount=mysqli_num_rows($result);
-                          printf($rowcount);
-                          // Free result set
-                          mysqli_free_result($result);
-                          }
-                        
-                        mysqli_close($con);
-                        ?>
+                      5
+                      <!-- <span class="text-success text-sm font-weight-bolder">+3%</span> -->
                     </h5>
                   </div>
                 </div>
