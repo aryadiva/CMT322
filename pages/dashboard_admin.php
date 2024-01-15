@@ -1,8 +1,5 @@
 <?php // MySQL credentials
-$servername = "localhost";
-$database = "cmt322";
-$username = "root";
-$password = "";
+include("credentials.php");
 ?>
 
 <!DOCTYPE html>
@@ -230,8 +227,28 @@ $password = "";
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Active Cases</p>
                     <h5 class="font-weight-bolder mb-0">
-                      50
-                      <!-- <span class="text-success text-sm font-weight-bolder">+5%</span> -->
+                      <?php
+                        $con = mysqli_connect($servername, $username, $password, $database);
+                        
+                        // Check connection
+                        if (mysqli_connect_errno())
+                          {
+                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                          }
+                        
+                        $sql="SELECT caseID FROM client_case";
+                        
+                        if ($result=mysqli_query($con,$sql))
+                          {
+                          // Return the number of rows in result set
+                          $rowcount=mysqli_num_rows($result);
+                          printf($rowcount);
+                          // Free result set
+                          mysqli_free_result($result);
+                          }
+                        
+                        mysqli_close($con);
+                        ?>
                     </h5>
                   </div>
                 </div>

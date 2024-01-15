@@ -1,4 +1,4 @@
-<?php // MySQL credentials
+<?php
 include("credentials.php");
 // Create a connection
 $conn = mysqli_connect($servername, $username, $password, $database);
@@ -14,7 +14,7 @@ $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
 $startFrom = ($currpage - 1) * $recordsperpage;
 
 // Fetch data from the database
-$sql = "SELECT * FROM users LIMIT $startFrom, $recordsperpage";
+$sql = "SELECT * FROM client_case LIMIT $startFrom, $recordsperpage";
 $result = mysqli_query($conn, $sql);
 ?>
 
@@ -45,7 +45,7 @@ $result = mysqli_query($conn, $sql);
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-  <?php include("sidebar.php");?>
+  <?php include("sidebar.php")?>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
@@ -53,9 +53,9 @@ $result = mysqli_query($conn, $sql);
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Users</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Case</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Users</h6>
+          <h6 class="font-weight-bolder mb-0">Case</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -171,20 +171,24 @@ $result = mysqli_query($conn, $sql);
         <div class="col-12">
           <div class="card mb-4">
             <!-- <div class="card-header pb-0">
-              <h6>All Staff</h6>
+              <h6>Authors table</h6>
             </div> -->
+
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">user ID</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">username</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">email</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">role</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">add</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">case ID</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">case name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">case type</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">client name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">staff in charge</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">judge</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">date created</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">document</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -192,12 +196,15 @@ $result = mysqli_query($conn, $sql);
                       if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                           echo("<tr>
-                          <td> <div class='text-center py-1'>".$row["userID"]."</div> </td>
-                          <td> <div class='text-center'>".$row["userName"]."</div> </td>
-                          <td> <div class='text-center'>".$row["name"]."</div> </td>
-                          <td> <div class='text-center'>".$row["email"]."</div> </td>
-                          <td> <div class='text-center'>".$row["role"]."</div> </td>
-                          <td class='text-center text-secondary text-xs'> <a href=#>edit</a> / <a href=#>delete</a> </td>
+                          <td> <div class='text-center py-1'> ".$row["caseID"]."</div> </td>
+                          <td> <div class='text-center'> ".$row["caseName"]."</div> </td>
+                          <td> <div class='text-center'>".$row["caseType"]."</div> </td>
+                          <td> <div class='text-center'>".$row["clientName"]."</div> </td>
+                          <td> <div class='text-center'>".$row["staff"]."</div> </td>
+                          <td> <div class='text-center'>".$row["judge"]."</div> </td>
+                          <td> <div class='text-center'>".$row["date_created"]."</div> </td>
+                          <td> <div class='text-center'>".$row["status"]."</div> </td>
+                          <td class='text-center'> <a href=". $row["document_loc"] ." target='_blank'>view</a></td>
                           </tr>");
                         }
                       } 
@@ -210,7 +217,7 @@ $result = mysqli_query($conn, $sql);
                 </table>
                 <div class="d-flex pagination" style="justify-content: center">
                 <?php
-                  $totpages=ceil($conn->query("SELECT COUNT(*) FROM users")->fetch_row()[0] / $recordsperpage);
+                  $totpages=ceil($conn->query("SELECT COUNT(*) FROM client_case")->fetch_row()[0] / $recordsperpage);
                     for($i=1; $i<=$totpages; $i++){
                       if($i==$currpage){
                       echo "<a class='active' href='?page=$i'>$i</a>";
@@ -220,14 +227,13 @@ $result = mysqli_query($conn, $sql);
                       }
                     } 
                   ?>
-                  
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
-      
       <!-- <div class="row">
         <div class="col-12">
           <div class="card mb-4">
@@ -452,7 +458,6 @@ $result = mysqli_query($conn, $sql);
           </div>
         </div>
       </div> -->
-      
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
@@ -572,9 +577,5 @@ $result = mysqli_query($conn, $sql);
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 </body>
-
-<?php
- $conn->close();
-?>
 
 </html>
