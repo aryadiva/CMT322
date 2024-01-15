@@ -182,8 +182,8 @@ $result = mysqli_query($conn, $sql);
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">userID</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">userName</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">user ID</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">username</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">email</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">role</th>
@@ -200,7 +200,7 @@ $result = mysqli_query($conn, $sql);
                           <td>".$row["name"]."</td>
                           <td>".$row["email"]."</td>
                           <td>".$row["role"]."</td>
-                          <td class='text-xs'>edit</td>
+                          <td class='text-center text-secondary text-xs'> <a href=#>edit</a> / <a href=#>delete</a> </td>
                           </tr>");
                         }
                       } 
