@@ -463,6 +463,16 @@ include("credentials.php");
           </div>
         </div>
       </div>
+      <?php 
+        $conn = mysqli_connect($servername, $username, $password, $database);
+        $recordsperpage=5;
+        $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
+        $startFrom = ($currpage - 1) * $recordsperpage;
+                  
+        // Fetch data from the database
+        $sql = "SELECT * FROM client_case LIMIT $startFrom, $recordsperpage";
+        $result = mysqli_query($conn, $sql);
+        ?>
       <div class="row my-4">
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
           <div class="card">
@@ -472,7 +482,17 @@ include("credentials.php");
                   <h6>Ongoing Cases</h6>
                   <p class="text-sm mb-0">
                     <!-- <i class="fa fa-check text-info" aria-hidden="true"></i> -->
-                    <span class="font-weight-bold ms-0">30</span> this month
+                    <span class="font-weight-bold ms-0"><?php 
+                    $client_tot="SELECT caseID FROM client_case";
+                    if ($res=mysqli_query($conn,$client_tot))
+                                      {
+                                      // Return the number of rows in result set
+                                      $rowcount=mysqli_num_rows($res);
+                                      printf($rowcount);
+                                      // Free result set
+                                      mysqli_free_result($res);
+                                      }
+                    ?></span> this month
                   </p>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
@@ -489,168 +509,35 @@ include("credentials.php");
                 </div>
               </div>
             </div>
-            <div class="card-body px-0 pb-2">
+            <div class="card-body ">
               <div class="table-responsive">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Client Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Person in Charge</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Person in Charge</th>
                       <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Debt</th> -->
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Category</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Category</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-3 py-1">
-                          <!-- <div>
-                            <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
-                          </div> -->
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Thomas Jefferson</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Mary Jane</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <!-- <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $14,000 </span>
-                      </td> -->
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Civil</h6>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+                  <?php 
+                      if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_assoc($result)){
+                          echo("<tr>
+                          <td> <div class='py-1 px-3'>".$row["clientName"]."</div> </td>
+                          <td> <div class='py-1 px-3'>".$row["staff"]."</div> </td>
+                          <td> <div class='py-1 px-3'>".$row["caseType"]."</div> </td>
+                          </tr>");
+                        }
+                      } 
+                      else {
+                        echo "0 results";
+                      }
 
-                    <tr>
-                      <td>
-                        <div class="d-flex px-3 py-1">
-                          <!-- <div>
-                            <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
-                          </div> -->
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Thomas Jefferson</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Mary Jane</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <!-- <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $14,000 </span>
-                      </td> -->
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Criminal</h6>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    
-                    <tr>
-                      <td>
-                        <div class="d-flex px-3 py-1">
-                          <!-- <div>
-                            <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
-                          </div> -->
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Thomas Jefferson</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Mary Jane</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <!-- <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $14,000 </span>
-                      </td> -->
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Civil</h6>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div class="d-flex px-3 py-1">
-                          <!-- <div>
-                            <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
-                          </div> -->
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Thomas Jefferson</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Mary Jane</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <!-- <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $14,000 </span>
-                      </td> -->
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Criminal</h6>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div class="d-flex px-3 py-1">
-                          <!-- <div>
-                            <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
-                          </div> -->
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Thomas Jefferson</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Mary Jane</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <!-- <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $14,000 </span>
-                      </td> -->
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Civil</h6>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+                      mysqli_close($conn);
+                      ?>
                   </tbody>
                 </table>
               </div>
