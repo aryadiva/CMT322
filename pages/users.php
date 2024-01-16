@@ -1,5 +1,5 @@
 <?php // MySQL credentials
-include("credentials.php");
+include("../assets/php-scripts/add_case.php");
 // Create a connection
 $conn = mysqli_connect($servername, $username, $password, $database);
 
@@ -65,13 +65,13 @@ $result = mysqli_query($conn, $sql);
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
+            <!-- <li class="nav-item d-flex align-items-center">
               <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online Builder</a>
-            </li>
+            </li> -->
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <!-- <span class="d-sm-inline d-none">Sign In</span> -->
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -179,7 +179,7 @@ $result = mysqli_query($conn, $sql);
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">user ID</th>
+                      <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">user ID</th> -->
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">username</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">email</th>
@@ -192,8 +192,8 @@ $result = mysqli_query($conn, $sql);
                       if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                           echo("<tr>
-                          <td> <div class='text-center py-1'>".$row["userID"]."</div> </td>
-                          <td> <div class='text-center'>".$row["userName"]."</div> </td>
+                          
+                          <td> <div class='text-center py-1'>".$row["userName"]."</div> </td>
                           <td> <div class='text-center'>".$row["name"]."</div> </td>
                           <td> <div class='text-center'>".$row["email"]."</div> </td>
                           <td> <div class='text-center'>".$row["role"]."</div> </td>

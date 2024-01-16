@@ -1,5 +1,5 @@
 <?php // MySQL credentials
-include("credentials.php");
+include("../assets/php-scripts/add_case.php");
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +54,7 @@ include("credentials.php");
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <!-- <span class="d-sm-inline d-none">Sign In</span> -->
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -901,5 +901,7 @@ include("credentials.php");
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 </body>
-
+<?php
+ $conn->close();
+?>
 </html>
