@@ -1,5 +1,5 @@
 <?php // MySQL credentials
-include("../assets/php-scripts/add_case.php");
+include("../assets/php-scripts/credentials.php");
 ?>
 
 <!DOCTYPE html>
@@ -901,7 +901,5 @@ include("../assets/php-scripts/add_case.php");
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 </body>
-<?php
- $conn->close();
-?>
+
 </html>

@@ -1,5 +1,5 @@
 <?php // MySQL credentials
-include("../assets/php-scripts/add_case.php");
+include("../assets/php-scripts/credentials.php");
 // Create a connection
 $conn = mysqli_connect($servername, $username, $password, $database);
 
@@ -169,6 +169,38 @@ $result = mysqli_query($conn, $sql);
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
+
+        <div class="card mb-4">
+          <!-- put add button here -->
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0 ">
+                <thead>
+                  <tr>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">username</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">name</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">password</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">email</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <form action="../assets/php-scripts/add_user.php" method="post">
+                    <tr>
+                      <td class="text-center"><input type="text" name="username" id="userName"></td>
+                      <td class="text-center"><input type="text" name="u_name" id="name"></td>
+                      <td class="text-center"><input type="text" name="u_pass" id="pass"></td>
+                      <td class="text-center"><input type="text" name="user_email" id="email"></td>
+                      <td class="text-center"><input type="text" name="role" id="role"></td>
+                      <td class="text-center"><input type="submit" value="Add"></td>
+                    </tr>
+                  </form>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
           <div class="card mb-4">
             <!-- <div class="card-header pb-0">
               <h6>All Staff</h6>
@@ -176,7 +208,7 @@ $result = mysqli_query($conn, $sql);
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 
-                <table class="table align-items-center mb-0">
+                <table class="searchable sortable table align-items-center mb-0">
                   <thead>
                     <tr>
                       <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">user ID</th> -->
@@ -573,8 +605,6 @@ $result = mysqli_query($conn, $sql);
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 </body>
 
-<?php
- $conn->close();
-?>
+
 
 </html>

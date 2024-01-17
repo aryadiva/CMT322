@@ -1,5 +1,5 @@
 <?php
-include("../assets/php-scripts/add_case.php");
+include("../assets/php-scripts/credentials.php");
 // Create a connection
 $conn = mysqli_connect($servername, $username, $password, $database);
 
@@ -190,15 +190,15 @@ $result = mysqli_query($conn, $sql);
                 <tbody>
                   <form action="../assets/php-scripts/add_case.php" method="post">
                     <tr>
-                      <td><input type="text" name="case_name" id="caseName"></td>
-                      <td><input type="text" name="case_type" id="caseType"></td>
-                      <td><input type="text" name="client_name" id="clientName"></td>
-                      <td><input type="text" name="staff" id="staff"></td>
-                      <td><input type="text" name="judge" id="judge"></td>
-                      <td><input type="text" name="date_created" id="dateCreated"></td>
-                      <td><input type="text" name="status" id="status"></td>
-                      <td><input type="text" name="doc_path" id="doc_path"></td>
-                      <td><input type="submit" value="Add"></td>
+                      <td class="text-center"><input type="text" name="case_name" id="caseName"></td>
+                      <td class="text-center"><input type="text" name="case_type" id="caseType"></td>
+                      <td class="text-center"><input type="text" name="client_name" id="clientName"></td>
+                      <td class="text-center"><input type="text" name="staff" id="staff"></td>
+                      <td class="text-center"><input type="text" name="judge" id="judge"></td>
+                      <td class="text-center"><input type="text" name="date_created" id="dateCreated"></td>
+                      <td class="text-center"><input type="text" name="status" id="status"></td>
+                      <td class="text-center"><input type="text" name="doc_path" id="doc_path"></td>
+                      <td class="text-center"><input type="submit" value="Add"></td>
                     </tr>
                   </form>
                   
@@ -615,7 +615,5 @@ $result = mysqli_query($conn, $sql);
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 </body>
-<?php
- $conn->close();
-?>
+
 </html>

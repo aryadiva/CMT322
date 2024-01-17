@@ -9,20 +9,17 @@ include("credentials.php");
                 . mysqli_connect_error());
         }
          
-        // Taking all 7 values from the form data(input)
-        $case_name =  $_REQUEST['case_name'];
-        $case_type = $_REQUEST['case_type'];
-        $client_name =  $_REQUEST['client_name'];
-        $staff =  $_REQUEST['staff'];
-        $judge =  $_REQUEST['judge'];
-        $date_created =  $_REQUEST['date_created'];
-        $status = $_REQUEST['status'];
-        $doc_path = $_REQUEST['doc_path'];
+        // Taking all values from the form data(input)
+        $username =  $_REQUEST['username'];
+        $u_name = $_REQUEST['u_name'];
+        $u_pass = $_REQUEST['u_pass'];
+        $user_email =  $_REQUEST['user_email'];
+        $role =  $_REQUEST['role'];
          
         // Performing insert query execution
         // here our table name is college
         $sql = "INSERT INTO client_case  VALUES 
-                ('','$case_name','$case_type','$client_name','$staff','$judge','$date_created','$status','$doc_path')";
+                ('','$user_name','$u_name','$u_name','$user_email','$role')";
          
         if(mysqli_query($conn, $sql)){
             echo "<script>alert('Success!')</script>"; 
