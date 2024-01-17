@@ -1,5 +1,6 @@
 <?php 
-header('Location: https://cmt322.aryadivap.site/pages/dashboard_admin.php');
+// header('Location: https://cmt322.aryadivap.site/pages/dashboard_admin.php');
+header('Location: pages/sign-in.php');
 exit;
 ?>
 <!-- <meta http-equiv="refresh" content="0; URL='https://cmt322.aryadivap.site/pages/dashboard_admin.php'"/>  -->

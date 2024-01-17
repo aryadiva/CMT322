@@ -1,17 +1,4 @@
-<!--
-=========================================================
-* Soft UI Dashboard - v1.0.7
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -133,49 +120,33 @@
                     <p class="mb-0">Enter your email and password to sign in</p>
                   </div>
                   <div class="card-body">
-                    <form role="form">
-                      <label>Email</label>
+                    <form action="../assets/php-scripts/authenticate.php" method="post">
+                      <label>Username</label>
                       <div class="mb-3">
-                        <input
-                          type="email"
-                          class="form-control"
-                          placeholder="Email"
-                          aria-label="Email"
-                          aria-describedby="email-addon"
-                        />
+                        <input id="userName" name="userName" type="text" class="form-control" placeholder="Username" aria-label="Username"
+                          aria-describedby="username-addon" required/>
                       </div>
+
                       <label>Password</label>
                       <div class="mb-3">
-                        <input
-                          type="email"
-                          class="form-control"
-                          placeholder="Password"
-                          aria-label="Password"
-                          aria-describedby="password-addon"
-                        />
+                        <input id="pass" name="pass" type="password" class="form-control" placeholder="Password" aria-label="Password"
+                          aria-describedby="password-addon" required/>
                       </div>
-                      <div class="form-check form-switch">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          id="rememberMe"
-                          checked=""
-                        />
-                        <label class="form-check-label" for="rememberMe"
-                          >Remember Me</label
-                        >
-                      </div>
+
+                      <!-- <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="rememberMe" checked="" />
+                        <label class="form-check-label" for="rememberMe">Remember Me</label>
+                      </div> -->
+
                       <div class="text-center">
-                        <button
-                          type="button"
-                          class="btn bg-gradient-info w-100 mt-4 mb-0"
-                        >
-                          Sign in
+                        <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">
+                          Login
                         </button>
+                        <!-- <input type="submit" value="LOGIN"> -->
                       </div>
                     </form>
                   </div>
-                  <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                  <!-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
                     <p class="mb-4 text-sm mx-auto">
                       Don't have an account?
                       <a
@@ -184,7 +155,7 @@
                         >Sign up</a
                       >
                     </p>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="col-md-6">

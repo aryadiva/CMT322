@@ -1,13 +1,5 @@
 <?php // MySQL credentials
-include("../assets/php-scripts/credentials.php");
-// Create a connection
-$conn = mysqli_connect($servername, $username, $password, $database);
-
-// Check the connection
-if (mysqli_connect_errno())
-{
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+include("../assets/php-scripts/config.php");
 
 $recordsperpage=10;
 $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
@@ -15,34 +7,13 @@ $startFrom = ($currpage - 1) * $recordsperpage;
 
 // Fetch data from the database
 $sql = "SELECT * FROM users LIMIT $startFrom, $recordsperpage";
-$result = mysqli_query($conn, $sql);
+$result = mysqli_query($con, $sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>
-    Soft UI Dashboard by Creative Tim
-  </title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
-  <!-- Nepcha Analytics (nepcha.com) -->
-  <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-</head>
+<?php include("head.php") ?>
 
 <body class="g-sidenav-show  bg-gray-100">
   <?php include("sidebar.php");?>
@@ -187,11 +158,11 @@ $result = mysqli_query($conn, $sql);
                 <tbody>
                   <form action="../assets/php-scripts/add_user.php" method="post">
                     <tr>
-                      <td class="text-center"><input type="text" name="username" id="userName"></td>
-                      <td class="text-center"><input type="text" name="u_name" id="name"></td>
-                      <td class="text-center"><input type="text" name="u_pass" id="pass"></td>
-                      <td class="text-center"><input type="text" name="user_email" id="email"></td>
-                      <td class="text-center"><input type="text" name="role" id="role"></td>
+                      <td class="text-center"><input type="text" name="username" id="userName" required></td>
+                      <td class="text-center"><input type="text" name="u_name" id="name" required></td>
+                      <td class="text-center"><input type="password" name="u_pass" id="pass" required></td>
+                      <td class="text-center"><input type="email" name="user_email" id="email" required></td>
+                      <td class="text-center"><input type="text" name="role" id="role" required></td>
                       <td class="text-center"><input type="submit" value="Add"></td>
                     </tr>
                   </form>
@@ -207,8 +178,8 @@ $result = mysqli_query($conn, $sql);
             </div> -->
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                
-                <table class="searchable sortable table align-items-center mb-0">
+                <!-- <input type="text" id="searchUsers_input" onkeyup="search_users()" placeholder="Search for names.."> -->
+                <table id="users_table" class="table align-items-center mb-0">
                   <thead>
                     <tr>
                       <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">user ID</th> -->
@@ -224,7 +195,6 @@ $result = mysqli_query($conn, $sql);
                       if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                           echo("<tr>
-                          
                           <td> <div class='text-center py-1'>".$row["userName"]."</div> </td>
                           <td> <div class='text-center'>".$row["name"]."</div> </td>
                           <td> <div class='text-center'>".$row["email"]."</div> </td>
@@ -240,9 +210,10 @@ $result = mysqli_query($conn, $sql);
                   </tbody>
                   
                 </table>
-                <div class="d-flex pagination" style="justify-content: center">
+                <div class="d-flex pagination py-3" style="justify-content: center;">
+                <!-- <script type="text/javascript" src="../assets/js/search_sortable_table.js"></script> -->
                 <?php
-                  $totpages=ceil($conn->query("SELECT COUNT(*) FROM users")->fetch_row()[0] / $recordsperpage);
+                  $totpages=ceil($con->query("SELECT COUNT(*) FROM users")->fetch_row()[0] / $recordsperpage);
                     for($i=1; $i<=$totpages; $i++){
                       if($i==$currpage){
                       echo "<a class='active' href='?page=$i'>$i</a>";

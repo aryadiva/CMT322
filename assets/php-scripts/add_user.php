@@ -1,14 +1,6 @@
 <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
 <?php
-include("credentials.php");
-        $conn = mysqli_connect($servername, $username, $password, $database);
-         
-        // Check connection
-        if($conn === false){
-            die("ERROR: Could not connect. "
-                . mysqli_connect_error());
-        }
-         
+include("config.php");
         // Taking all values from the form data(input)
         $username =  $_REQUEST['username'];
         $u_name = $_REQUEST['u_name'];
@@ -21,14 +13,14 @@ include("credentials.php");
         $sql = "INSERT INTO client_case  VALUES 
                 ('','$user_name','$u_name','$u_name','$user_email','$role')";
          
-        if(mysqli_query($conn, $sql)){
+        if(mysqli_query($con, $sql)){
             echo "<script>alert('Success!')</script>"; 
-            header( "refresh:0.2; url=case.php" );
+            header( "refresh:0.2; url=../../pages/users.php");
         } else{
             echo "ERROR: Unsuccessful $sql. "
-                . mysqli_error($conn);
+                . mysqli_error($con);
         }
          
-        // Close connection
-        mysqli_close($conn);
+        // Close conection
+        mysqli_close($con);
 ?>

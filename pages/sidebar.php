@@ -1,12 +1,3 @@
-<?php
-function active($currect_page){
-  $url_array =  explode('/', $_SERVER['REQUEST_URI']) ;
-  $url = end($url_array);  
-  if($currect_page == $url){
-      echo 'active'; //class name in css 
-  } 
-}
-?>
 
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
@@ -168,7 +159,8 @@ function active($currect_page){
             <span class="nav-link-text ms-1">Profile</span>
           </a>
         </li>
-        <li class="nav-item">
+        
+        <!-- <li class="nav-item">
           <a class="nav-link " href="sign-in.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -187,9 +179,10 @@ function active($currect_page){
             </div>
             <span class="nav-link-text ms-1">Sign In</span>
           </a>
-        </li>
+        </li> -->
+
         <li class="nav-item">
-          <a class="nav-link  " href="sign-up.php">
+          <a class="nav-link " href="../assets/php-scripts/logout.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>spaceship</title>
@@ -207,7 +200,7 @@ function active($currect_page){
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Sign Up</span>
+            <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
       </ul>
