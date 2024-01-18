@@ -1195,7 +1195,7 @@
             You can change the sidenav type just on desktop view.
           </p>
           <!-- Navbar Fixed -->
-          <div class="mt-3">
+          <!-- <div class="mt-3">
             <h6 class="mb-0">Navbar Fixed</h6>
           </div>
           <div class="form-check form-switch ps-0">
@@ -1242,7 +1242,7 @@
             >
               <i class="fab fa-facebook-square me-1" aria-hidden="true"></i>
               Share
-            </a>
+            </a> -->
           </div>
         </div>
       </div>

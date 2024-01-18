@@ -553,7 +553,7 @@ $result = mysqli_query($con, $sql);
         </div>
         <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
         <!-- Navbar Fixed -->
-        <div class="mt-3">
+        <!-- <div class="mt-3">
           <h6 class="mb-0">Navbar Fixed</h6>
         </div>
         <div class="form-check form-switch ps-0">
@@ -570,7 +570,7 @@ $result = mysqli_query($con, $sql);
           </a>
           <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/soft-ui-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
             <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-          </a>
+          </a> -->
         </div>
       </div>
     </div>
