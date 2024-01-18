@@ -27248,7 +27248,6 @@ pre[class*="language-"] {
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
-<<<<<<< HEAD
 
 /* additional style */
 .pagination {
@@ -27272,5 +27271,45 @@ pre[class*="language-"] {
   background-color: #ddd;
   border-radius: 5px;
 }
-=======
->>>>>>> 317f341d0a112a8a959454b2c4ab6daabe790199
+
+#searchUsers_input {
+  /* background-image: url('../../assets/img/small-logos/searchicon.png');  */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#users_table, #cases_table {
+  border-collapse: collapse; /* Collapse borders */
+  width: 100%; /* Full-width */
+  border: 1px solid #ddd; /* Add a grey border */
+  /* font-size: 18px; Increase font-size */
+}
+
+/* #users_table th, #users_table td, #cases_table th, #cases_table td {
+  text-align: left;
+  padding: 12px; 
+} */
+
+#users_table tr, #cases_table tr{
+  /* Add a bottom border to all table rows */
+  border-bottom: 1px solid #ddd;
+}
+
+#users_table tr.header, #users_table tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+
+#cases_table tr.header, #cases_table tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+
+.error{
+  color: red;
+}
