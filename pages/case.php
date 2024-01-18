@@ -1,5 +1,12 @@
 <?php
+session_start();
+
 include("../assets/php-scripts/config.php");
+
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: sign-in.php');
+	exit;
+}
 
 $recordsperpage=10;
 $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
@@ -40,7 +47,7 @@ $result = mysqli_query($con, $sql);
               <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online Builder</a>
             </li> -->
             <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+              <a href="profile.php" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <!-- <span class="d-sm-inline d-none">Sign In</span> -->
               </a>
@@ -157,7 +164,7 @@ $result = mysqli_query($con, $sql);
                   </tr>
                 </thead>
                 <tbody>
-                  <form id ="addCaseForm" action="../assets/php-scripts/add_case.php" method="post">
+                  <form id ="addCaseForm" action="../assets/php-scripts/add_case.php" method="post" enctype="multipart/form-data">
                     <tr>
                       <td class="text-center"><input type="text" name="case_name" id="caseName" required></td>
                       <td class="text-center"><input type="text" name="case_type" id="caseType" required></td>
@@ -165,11 +172,11 @@ $result = mysqli_query($con, $sql);
                       <td class="text-center"><input type="text" name="staff" id="staff" required></td>
                       <td class="text-center"><input type="text" name="judge" id="judge" required></td>
                       <td class="text-center"><input type="date" name="date_created" id="dateCreated" required></td>
-                      <td class="text-center"><select name="status" id="status" required>
-                          <option value="ongoing">Ongoing</option>
+                      <td class="text-center"><select name="status" id="status" accept=".pdf, .docx, .xlsx, .jpeg" required>
+                          <option value="Ongoing">Ongoing</option>
                           <option value="completed">Completed</option>
                         </select></td>
-                      <td class="text-center"><input type="text" name="doc_path" id="doc_path" required></td>
+                      <td class="text-center"><input type="file" name="doc_name" id="doc_name" required></td>
                       <td class="text-center"><input type="submit" value="Add"></td>
                     </tr>
                   </form>
@@ -213,7 +220,8 @@ $result = mysqli_query($con, $sql);
                           <td> <div class='text-center'>".$row["judge"]."</div> </td>
                           <td> <div class='text-center'>".$row["date_created"]."</div> </td>
                           <td> <div class='text-center'>".$row["status"]."</div> </td>
-                          <td class='text-center'> <a href=". $row["document_loc"] ." target='_blank'>view</a></td>
+                          <td class='text-center'> <a href=../docs/". $row["doc_name"] .">view</a></td>
+                          
                           </tr>");
                         }
                       } 

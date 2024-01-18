@@ -1,5 +1,12 @@
 <?php // MySQL credentials
+session_start();
+
 include("../assets/php-scripts/config.php");
+
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: sign-in.php');
+	exit;
+}
 
 $recordsperpage=10;
 $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
@@ -40,7 +47,7 @@ $result = mysqli_query($con, $sql);
               <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online Builder</a>
             </li> -->
             <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+              <a href="profile.php" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <!-- <span class="d-sm-inline d-none">Sign In</span> -->
               </a>
@@ -187,7 +194,7 @@ $result = mysqli_query($con, $sql);
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">email</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">role</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">add</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">modify</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -196,9 +203,9 @@ $result = mysqli_query($con, $sql);
                         while($row = mysqli_fetch_assoc($result)){
                           echo("<tr>
                           <td> <div class='text-center py-1'>".$row["userName"]."</div> </td>
-                          <td> <div class='text-center'>".$row["name"]."</div> </td>
+                          <td> <div class='text-center'>".$row["u_name"]."</div> </td>
                           <td> <div class='text-center'>".$row["email"]."</div> </td>
-                          <td> <div class='text-center'>".$row["role"]."</div> </td>
+                          <td> <div class='text-center'>".$row["u_role"]."</div> </td>
                           <td class='text-center text-secondary text-xs'> <a href=#>edit</a> / <a href=#>delete</a> </td>
                           </tr>");
                         }
