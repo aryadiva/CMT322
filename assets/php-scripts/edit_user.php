@@ -37,7 +37,7 @@ $row=mysqli_fetch_array($query);
                                     value="<?php echo($row['pass']) ?>" required></td>
                             <td class="text-center"><input type="email" name="user_email" id="email"
                                     value="<?php echo($row['email']) ?>" required></td>
-                            <td class="text-center"><select name="role" id="role" required>
+                            <td class="text-center"><select name="role" id="role" value="<?php echo($row['u_role']) ?>" required>
                                 <option value='Admin'>Admin</option>
                                 <option value='Staff'>Staff</option>
                             </td>

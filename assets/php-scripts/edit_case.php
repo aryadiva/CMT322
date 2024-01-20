@@ -66,7 +66,7 @@ $row=mysqli_fetch_array($query);
                   </tr>
                 </thead>
                 <tbody>
-                  <td class="text-center"><input type="date" name="date_created" id="dateCreated" required></td>
+                  <td class="text-center"><input type="date" name="date_created" id="dateCreated" value="<?php echo($row['date_created']) ?>" required></td>
                   <td class="text-center"><select name="status" id="status" required>
                       <option value="Ongoing">Ongoing</option>
                       <option value="Completed">Completed</option>
