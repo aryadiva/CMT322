@@ -11,8 +11,14 @@ $recordsperpage=5;
 $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
 $startFrom = ($currpage - 1) * $recordsperpage;
 
+$userName=$_SESSION['name'];
 // Fetch data from the database
-$sql = "SELECT * FROM appointment LIMIT $startFrom, $recordsperpage";
+if($_SESSION['u_role']=="Admin"){
+  $sql = "SELECT * FROM appointment LIMIT $startFrom, $recordsperpage";
+}
+elseif($_SESSION['u_role']=="Staff"){
+  $sql = "SELECT * FROM appointment WHERE staff='$userName' LIMIT $startFrom, $recordsperpage";
+}
 $result = mysqli_query($con, $sql);
 ?>
 
