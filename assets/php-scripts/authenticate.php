@@ -13,7 +13,7 @@ if ( !isset($_POST['userName'], $_POST['pass']) ) {
 $pass_hash=password_hash($_POST['pass'], PASSWORD_BCRYPT, array('cost'=>12));
 
 // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-if ($stmt = $con->prepare('SELECT userID, pass FROM users WHERE userName = ?')) {
+if ($stmt = $con->prepare('SELECT userID, pass, u_name, u_role FROM users WHERE userName = ?')) {
 	// Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
 	$stmt->bind_param('s', $_POST['userName']);
 	$stmt->execute();
@@ -21,22 +21,34 @@ if ($stmt = $con->prepare('SELECT userID, pass FROM users WHERE userName = ?')) 
 	$stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($userID, $pass);
+        $stmt->bind_result($userID, $pass, $u_name, $u_role);
         $stmt->fetch();
         // Account exists, now we verify the password.
         // Note: remember to use password_hash in your registration file to store the hashed passwords.
         if (password_verify($_POST['pass'], $pass_hash)) {
             // Verification success! User has logged-in!
-            // Create sessions, so we know the user is logged in, they basically act like cookies but remember the data on the server.
             session_regenerate_id();
             $_SESSION['loggedin'] = TRUE;
-            $_SESSION['name'] = $_POST['userName'];
+            $_SESSION['name'] = $u_name;
             $_SESSION['id'] = $userID;
-            header('Location: ../../pages/dashboard_admin.php');
-        } else {
+            $_SESSION['u_role'] = $u_role;
+
+            // Redirect based on user level
+            if ($u_role == 'Admin') {
+                //session_regenerate_id();
+                header('Location: ../../pages/dashboard_admin.php');
+            } elseif ($u_role == 'Staff') {
+                // session_regenerate_id();
+                header('Location: ../../pages/dashboard_staff.php');
+            } else {
+                // session_regenerate_id();
+                // Handle other user levels or provide a default redirection
+                header('Location: ../../pages/sign-in.php');} 
+            }
+            else {
             // Incorrect password
             echo 'Incorrect password! <br>';
-            echo($pass_hash=password_hash($_POST['pass'], PASSWORD_BCRYPT, array('cost'=>12)));
+            //echo($pass_hash=password_hash($_POST['pass'], PASSWORD_BCRYPT, array('cost'=>12)));
         }
     } else {
         // Incorrect username
@@ -45,4 +57,7 @@ if ($stmt = $con->prepare('SELECT userID, pass FROM users WHERE userName = ?')) 
 
 	$stmt->close();
 }
+else {
+    // Handle database error
+    echo 'Database error';}
 ?>
