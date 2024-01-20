@@ -12,8 +12,27 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
+<?php 
+session_start();
+?>
+
+<?php
+include("../assets/php-scripts/config.php");
+
+
+$userName = $_SESSION['name'];
+
+$stmt = $con->prepare("SELECT u_name, email, userID FROM users WHERE userName = ?");
+$stmt->bind_param('s', $userName);
+$stmt->execute();
+$stmt->bind_result($u_name, $email, $userID);
+$stmt->fetch();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
+<?php include("head.php") ?>
   <head>
     <meta charset="utf-8" />
     <meta
@@ -294,8 +313,14 @@
             </div>
             <div class="col-auto my-auto">
               <div class="h-100">
-                <h5 class="mb-1">Alec Thompson</h5>
-                <p class="mb-0 font-weight-bold text-sm">CEO / Co-Founder</p>
+              <?php
+
+                  echo "<h5>$u_name</h5>";
+                  $stmt->close();
+                  mysqli_close($con);
+              ?>
+                <!-- <h5 class="mb-1">Alec Thompson</h5> -->
+                <!-- <p class="mb-0 font-weight-bold text-sm">CEO / Co-Founder</p> -->
               </div>
             </div>
             <div
@@ -594,34 +619,29 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body p-3">
-                <p class="text-sm">
+              <div class="card-body p-3 ">
+                <!-- <p class="text-sm">
                   Hi, I’m Alec Thompson, Decisions: If you can’t decide, the
                   answer is no. If two equally difficult paths, choose the one
                   more painful in the short term (pain avoidance is creating an
                   illusion of equality).
                 </p>
-                <hr class="horizontal gray-light my-4" />
-                <ul class="list-group">
-                  <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                    <strong class="text-dark">User ID:</strong> &nbsp; LS001
-                  </li>
-                  <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                    <strong class="text-dark">Full Name:</strong> &nbsp; Alec M.
-                    Thompson
-                  </li>
-                  <li class="list-group-item border-0 ps-0 text-sm">
-                    <strong class="text-dark">Mobile:</strong> &nbsp; (44) 123
-                    1234 123
-                  </li>
-                  <li class="list-group-item border-0 ps-0 text-sm">
-                    <strong class="text-dark">Email:</strong> &nbsp;
-                    alecthompson@mail.com
-                  </li>
-                  <li class="list-group-item border-0 ps-0 text-sm">
-                    <strong class="text-dark">Location:</strong> &nbsp; USA
-                  </li>
-                  <!-- <li class="list-group-item border-0 ps-0 pb-0">
+                <hr class="horizontal gray-light my-4" /> -->
+                <?php
+
+                  echo ("<ul class='list-group'>
+                  <li class='list-group-item border-0 ps-0 pt-0 text-sm'><strong class='text-dark'>User ID:</strong> &nbsp; $userID</li>
+                  <li class='list-group-item border-0 ps-0 pt-0 text-sm'><strong class='text-dark'>Full Name:</strong> &nbsp; $u_name</li>
+                  
+                  <li class='list-group-item border-0 ps-0 text-sm'><strong class='text-dark'>Email:</strong> &nbsp; $email</li>
+
+                  </ul>");
+                  // $stmt->close();
+                  // mysqli_close($con);
+              ?>
+                
+                <!-- <ul class="list-group">
+                  <li class="list-group-item border-0 ps-0 pb-0">
                     <strong class="text-dark text-sm">Social:</strong> &nbsp;
                     <a
                       class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0"
@@ -641,8 +661,8 @@
                     >
                       <i class="fab fa-instagram fa-lg"></i>
                     </a>
-                  </li> -->
-                </ul>
+                  </li>
+                </ul> -->
               </div>
             </div>
           </div>

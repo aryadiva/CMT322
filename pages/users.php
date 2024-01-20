@@ -196,9 +196,9 @@ $result = mysqli_query($con, $sql);
                         while($row = mysqli_fetch_assoc($result)){
                           echo("<tr>
                           <td> <div class='text-center py-1'>".$row["userName"]."</div> </td>
-                          <td> <div class='text-center'>".$row["name"]."</div> </td>
+                          <td> <div class='text-center'>".$row["u_name"]."</div> </td>
                           <td> <div class='text-center'>".$row["email"]."</div> </td>
-                          <td> <div class='text-center'>".$row["role"]."</div> </td>
+                          <td> <div class='text-center'>".$row["u_role"]."</div> </td>
                           <td class='text-center text-secondary text-xs'> <a href=#>edit</a> / <a href=#>delete</a> </td>
                           </tr>");
                         }

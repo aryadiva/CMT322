@@ -213,7 +213,7 @@ $result = mysqli_query($con, $sql);
                           <td> <div class='text-center'>".$row["judge"]."</div> </td>
                           <td> <div class='text-center'>".$row["date_created"]."</div> </td>
                           <td> <div class='text-center'>".$row["status"]."</div> </td>
-                          <td class='text-center'> <a href=". $row["document_loc"] ." target='_blank'>view</a></td>
+                          <td class='text-center'> <a href=". $row["doc_name"] ." target='_blank'>view</a></td>
                           </tr>");
                         }
                       } 
