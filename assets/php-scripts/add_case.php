@@ -1,10 +1,12 @@
 <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet"/>
 <?php
 include("config.php");
-// Taking all 7 values from the form data(input)
+
+// Taking all values from the form data(input)
 $case_name = $_REQUEST['case_name'];
 $case_type = $_REQUEST['case_type'];
 $client_name = $_REQUEST['client_name'];
+$client_email = $_REQUEST['client_email'];
 $staff = $_REQUEST['staff'];
 $judge = $_REQUEST['judge'];
 $date_created = $_REQUEST['date_created'];
@@ -19,7 +21,7 @@ if (in_array($fileType, $allowTypes)) {
         // Performing insert query execution
         // here our table name is college
         $sql = "INSERT INTO client_case  VALUES 
-                ('', '$case_name', '$case_type', '$client_name', '$staff', '$judge', '$date_created', '$status', '$fileName')
+                ('', '$case_name', '$case_type', '$client_name', '$client_email', '$staff', '$judge', '$date_created', '$status', '$fileName')
         ";
 
         if (mysqli_query($con, $sql)) {

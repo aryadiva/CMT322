@@ -465,7 +465,7 @@ include("../assets/php-scripts/config.php");
           </div>
         </div>
       </div>
-      
+      <? include("footer.php") ?>
     </div>
   </main>
   <div class="fixed-plugin">
