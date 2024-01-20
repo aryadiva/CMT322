@@ -12,8 +12,14 @@ $recordsperpage=10;
 $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
 $startFrom = ($currpage - 1) * $recordsperpage;
 
+$userName=$_SESSION['name'];
 // Fetch data from the database
-$sql = "SELECT * FROM client_case LIMIT $startFrom, $recordsperpage";
+if($_SESSION['u_role']=="Admin"){
+  $sql = "SELECT * FROM client_case LIMIT $startFrom, $recordsperpage";
+}
+elseif($_SESSION['u_role']=="Staff"){
+  $sql = "SELECT * FROM client_case WHERE staff='$userName' LIMIT $startFrom, $recordsperpage";
+}
 $result = mysqli_query($con, $sql);
 ?>
 
@@ -177,11 +183,11 @@ $result = mysqli_query($con, $sql);
                       <td class='text-center'><input type='text' name='staff' id='staff' required></td>
                       <td class='text-center'><input type='text' name='judge' id='judge' required></td>
                       <td class='text-center'><input type='date' name='date_created' id='dateCreated' required></td>
-                      <td class='text-center'><select name='status' id='status' accept='.pdf, .docx, .xlsx, .jpeg' required>
+                      <td class='text-center'><select name='status' id='status' required>
                           <option value='Ongoing'>Ongoing</option>
                           <option value='completed'>Completed</option>
                         </select></td>
-                      <td class='text-center'><input type='file' name='doc_name' id='doc_name' required></td>
+                      <td class='text-center'><input type='file' name='doc_name' id='doc_name' accept='.pdf, .docx, .xlsx, .jpeg' required></td>
                       <td class='text-center'><input type='submit' value='Add'></td>
                     </tr>
                   </form>
@@ -226,7 +232,7 @@ $result = mysqli_query($con, $sql);
                           <td> <div class='text-center'>".$row["date_created"]."</div> </td>
                           <td> <div class='text-center'>".$row["status"]."</div> </td>
                           <td class='text-center'> <a href=../docs/". $row["doc_name"] .">view</a></td>
-                          <td class='text-center'> <a href='../assets/php-scripts/edit_case.php?id={$row['caseID']}'>edit</a> 
+                          <td class='text-center text-xs'> <a href='../assets/php-scripts/edit_case.php?id={$row['caseID']}'>edit</a> 
                           / <a href='../assets/php-scripts/delete_case.php?id={$row['caseID']}'>delete</a></td>
                           </tr>");
                         }

@@ -164,11 +164,14 @@ $result = mysqli_query($con, $sql);
                 <tbody>
                   <form action="../assets/php-scripts/add_user.php" method="post">
                     <tr>
-                      <td class="text-center"><input type="text" name="username" id="userName" required></td>
+                      <td class="text-center"><input type="text" name="userName" id="userName" required></td>
                       <td class="text-center"><input type="text" name="u_name" id="name" required></td>
                       <td class="text-center"><input type="password" name="u_pass" id="pass" required></td>
                       <td class="text-center"><input type="email" name="user_email" id="email" required></td>
-                      <td class="text-center"><input type="text" name="role" id="role" required></td>
+                      <td class="text-center"><select name="role" id="role" required>
+                        <option value="Admin">Admin</option>
+                        <option value="Staff">Staff</option>
+                      </td>
                       <td class="text-center"><input type="submit" value="Add"></td>
                     </tr>
                   </form>
@@ -205,7 +208,8 @@ $result = mysqli_query($con, $sql);
                           <td> <div class='text-center'>".$row["u_name"]."</div> </td>
                           <td> <div class='text-center'>".$row["email"]."</div> </td>
                           <td> <div class='text-center'>".$row["u_role"]."</div> </td>
-                          <td class='text-center text-secondary text-xs'> <a href=#>edit</a> / <a href=#>delete</a> </td>
+                          <td class='text-center text-secondary text-xs'> <a href='../assets/php-scripts/edit_user.php?id={$row['userID']}'>edit</a> 
+                          / <a href='../assets/php-scripts/delete_user.php?id={$row['userID']}'>delete</a> </td>
                           </tr>");
                         }
                       } 
