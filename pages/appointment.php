@@ -215,9 +215,11 @@ $result = mysqli_query($con, $sql);
                           / <a href='../assets/php-scripts/delete_appointment.php?id={$row['appointmentID']}'>delete</a> </td>
                           </tr>");
                         }
+                        $none_check=FALSE;
                       } 
                       else {
                         echo "0 results";
+                        $none_check=TRUE;
                       }
                       ?>
                   </tbody>
@@ -226,6 +228,7 @@ $result = mysqli_query($con, $sql);
                 <div class="d-flex pagination py-3" style="justify-content: center;">
                 <!-- <script type="text/javascript" src="../assets/js/search_sortable_table.js"></script> -->
                 <?php
+                if($none_check!=TRUE){
                   $totpages=ceil($con->query("SELECT COUNT(*) FROM appointment")->fetch_row()[0] / $recordsperpage);
                     for($i=1; $i<=$totpages; $i++){
                       if($i==$currpage){
@@ -234,7 +237,8 @@ $result = mysqli_query($con, $sql);
                       else{
                         echo "<a href='?page=$i'>$i</a>";
                       }
-                    } 
+                    }
+                } 
                   ?>
                   
                 </div>

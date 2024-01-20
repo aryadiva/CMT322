@@ -9,6 +9,21 @@ if (!isset($_SESSION['loggedin'])&& $_SESSION['u_role']!="Admin") {
 
 <?php // MySQL credentials
 include("../assets/php-scripts/config.php");
+
+$recordsperpage=5;
+$currpage=isset($_GET['page']) ? $_GET['page'] : 1;
+$startFrom = ($currpage - 1) * $recordsperpage;
+
+$userName=$_SESSION['name'];
+// Fetch data from the database
+if($_SESSION['u_role']=="Admin"){
+  $sql = "SELECT * FROM tasks LIMIT $startFrom, $recordsperpage";
+}
+elseif($_SESSION['u_role']=="Staff"){
+  $sql = "SELECT * FROM tasks WHERE staffName='$userName' LIMIT $startFrom, $recordsperpage";
+}
+$result = mysqli_query($con, $sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -401,11 +416,7 @@ include("../assets/php-scripts/config.php");
         <div class="col-lg-4 col-md-6">
           <div class="card h-100">
             <div class="card-header pb-0">
-              <h6>Recent Tasks</h6>
-              <!-- <p class="text-sm">
-                <i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
-                <span class="font-weight-bold">24%</span> this month
-              </p> -->
+              <h6>Upcoming Reminders</h6>
             </div>
             <div class="card-body p-3">
               <div class="timeline timeline-one-side">

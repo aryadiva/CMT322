@@ -41,7 +41,7 @@ $row=mysqli_fetch_array($query);
                                 <option value='Admin'>Admin</option>
                                 <option value='Staff'>Staff</option>
                             </td>
-                            <td class="text-center"><input type="submit" value="Add"></td>
+                            <td class="text-center"><input type="submit" value="Update"></td>
                         </tr>
                     </form>
 

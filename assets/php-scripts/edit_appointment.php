@@ -35,7 +35,7 @@ $row=mysqli_fetch_array($query);
                             </td>
                             <td class="text-center"><input type="text" name="staff" id="staff" value="<?php echo($row['staff']) ?>" required></td>
                             <td class="text-center"><input type="date" name="date" id="date" value="<?php echo($row['date']) ?>" required></td>
-                            <td class="text-center"><input type="submit" value="Add"></td>
+                            <td class="text-center"><input type="submit" value="Update"></td>
                         </tr>
                     </form>
 

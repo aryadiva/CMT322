@@ -12,14 +12,8 @@ $recordsperpage=10;
 $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
 $startFrom = ($currpage - 1) * $recordsperpage;
 
-$userName=$_SESSION['name'];
 // Fetch data from the database
-if($_SESSION['u_role']=="Admin"){
-  $sql = "SELECT * FROM client_case LIMIT $startFrom, $recordsperpage";
-}
-elseif($_SESSION['u_role']=="Staff"){
-  $sql = "SELECT * FROM client_case WHERE staff='$userName' LIMIT $startFrom, $recordsperpage";
-}
+$sql = "SELECT * FROM tasks LIMIT $startFrom, $recordsperpage";
 $result = mysqli_query($con, $sql);
 ?>
 
@@ -153,69 +147,57 @@ $result = mysqli_query($con, $sql);
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
-          <?php 
-          if($_SESSION['u_role'] == "Admin" || $_SESSION['u_role'] == "Staff"){
-            echo("
-            <div class='card mb-4'>
-            <div class='card-body px-0 pt-0 pb-2'>
-            <div class='table-responsive p-1'>
-              <table class='table align-items-center mb-0 '>
+        <div class="card mb-4">
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-1">
+              <table class="table align-items-center mb-0 ">
                 <thead>
                   <tr>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>case name</th>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>case type</th>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>client name</th>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>client email</th>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>staff in charge</th>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>judge</th>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>date created</th>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>status</th>
-                    <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>document</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">staff name</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">description</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">date created</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">due date</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <form id ='addCaseForm' action='../assets/php-scripts/add_case.php' method='post' enctype='multipart/form-data'>
+                  <form id ="addTaskForm" action="../assets/php-scripts/add_task.php" method="post" enctype="multipart/form-data">
                     <tr>
-                      <td class='text-center'><input type='text' name='case_name' id='caseName' required></td>
-                      <td class='text-center'><input type='text' name='case_type' id='caseType' required></td>
-                      <td class='text-center'><input type='text' name='client_name' id='clientName' required></td>
-                      <td class='text-center'><input type='text' name='client_email' id='clientEmail' required></td>
-                      <td class='text-center'><input type='text' name='staff' id='staff' required></td>
-                      <td class='text-center'><input type='text' name='judge' id='judge' required></td>
-                      <td class='text-center'><input type='date' name='date_created' id='dateCreated' required></td>
-                      <td class='text-center'><select name='status' id='status' required>
-                          <option value='Ongoing'>Ongoing</option>
-                          <option value='completed'>Completed</option>
+                      <td class="text-center"><input type="text" name="staff_name" id="staffName" required></td>
+                      <td class="text-center"><input type="text" name="description" id="description" required></td>
+                      <td class="text-center"><input type="date" name="date_created" id="dateCreated" required></td>
+                      <td class="text-center"><input type="date" name="due_date" id="dueDate" required></td>
+                      <td class="text-center"><select name="status" id="status" required>
+                          <option value="Ongoing" >Ongoing</option>
+                          <option value="Completed" >Completed</option>
                         </select></td>
-                      <td class='text-center'><input type='file' name='doc_name' id='doc_name' accept='.pdf, .docx, .xlsx, .jpeg' required></td>
-                      <td class='text-center'><input type='submit' value='Add'></td>
+                      <td class="text-center"><input type="submit" value="Add"></td>
                     </tr>
                   </form>
                 </tbody>
               </table>
             </div>
-            </div>
           </div>
-            ");
-          }
-          ?>
+        </div>
 
           <div class="card mb-4">
+            <!-- <div class="card-header pb-0">
+              <h6>Authors table</h6>
+            </div> -->
+
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table id="cases_table" class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">case name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">case type</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">client name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">client email</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">staff in charge</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">judge</th>
+                      <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">case ID</th> -->
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">staff name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">description</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">date created</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">due date</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">status</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">document</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">modify</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -223,32 +205,25 @@ $result = mysqli_query($con, $sql);
                       if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                           echo("<tr>
-                          <td> <div class='text-center py-1'> ".$row["caseName"]."</div> </td>
-                          <td> <div class='text-center'>".$row["caseType"]."</div> </td>
-                          <td> <div class='box text-center'>".$row["clientName"]."</div> </td>
-                          <td> <div class='box text-center'>".$row["client_email"]."</div> </td>
-                          <td> <div class='text-center'>".$row["staff"]."</div> </td>
-                          <td> <div class='text-center'>".$row["judge"]."</div> </td>
-                          <td> <div class='text-center'>".$row["date_created"]."</div> </td>
+                          
+                          <td> <div class='text-center py-1'> ".$row["staffName"]."</div> </td>
+                          <td> <div class='text-center'>".$row["description"]."</div> </td>
+                          <td> <div class='text-center'>".$row["dateCreated"]."</div> </td>
+                          <td> <div class='text-center'>".$row["dueDate"]."</div> </td>
                           <td> <div class='text-center'>".$row["status"]."</div> </td>
-                          <td class='text-center'> <a href=../docs/". $row["doc_name"] .">view</a></td>
-                          <td class='text-center text-xs'> <a href='../assets/php-scripts/edit_case.php?id={$row['caseID']}'>edit</a> 
-                          / <a href='../assets/php-scripts/delete_case.php?id={$row['caseID']}'>delete</a></td>
+                          <td class='text-center text-secondary text-xs'> <a href='../assets/php-scripts/edit_tasks.php?id={$row['staffID']}'> / <a href=#>delete</a> </td>
                           </tr>");
                         }
-                        $none_check=FALSE;
                       } 
                       else {
-                        $none_check=TRUE;
                         echo "0 results";
                       }
                       ?>
                   </tbody>
+                  
                 </table>
-                
                 <div class="d-flex pagination py-3" style="justify-content: center">
                 <?php
-                if($none_check!=TRUE){
                   $totpages=ceil($con->query("SELECT COUNT(*) FROM client_case")->fetch_row()[0] / $recordsperpage);
                     for($i=1; $i<=$totpages; $i++){
                       if($i==$currpage){
@@ -257,16 +232,47 @@ $result = mysqli_query($con, $sql);
                       else{
                         echo "<a href='?page=$i'>$i</a>";
                       }
-                    }
-                } 
+                    } 
                   ?>
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
-      <?php include("footer.php")?>
+      <footer class="footer pt-3  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>,
+                made with <i class="fa fa-heart"></i> by
+                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                for a better web.
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -313,7 +319,7 @@ $result = mysqli_query($con, $sql);
         </div>
         <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
         <!-- Navbar Fixed -->
-        <!-- <div class="mt-3">
+        <div class="mt-3">
           <h6 class="mb-0">Navbar Fixed</h6>
         </div>
         <div class="form-check form-switch ps-0">
@@ -330,7 +336,7 @@ $result = mysqli_query($con, $sql);
           </a>
           <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/soft-ui-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
             <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-          </a> -->
+          </a>
         </div>
       </div>
     </div>
