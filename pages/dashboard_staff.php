@@ -6,9 +6,37 @@ if (!isset($_SESSION['loggedin'])&& $_SESSION['u_role']!="Admin") {
 	exit;
 }
 ?>
-
 <?php // MySQL credentials
 include("../assets/php-scripts/config.php");
+
+$recordsperpage=5;
+$currpage=isset($_GET['page']) ? $_GET['page'] : 1;
+$startFrom = ($currpage - 1) * $recordsperpage;
+
+$userName=$_SESSION['name'];
+// Fetch data from the database
+if($_SESSION['u_role']=="Admin"){
+  $sql_tasks = "SELECT * FROM tasks LIMIT $startFrom, $recordsperpage";
+}
+elseif($_SESSION['u_role']=="Staff"){
+  $sql_tasks = "SELECT * FROM tasks WHERE staffName='$userName' LIMIT $startFrom, $recordsperpage";
+  $sql_appointment = "SELECT * FROM appointment WHERE staff='$userName' LIMIT $startFrom, $recordsperpage";
+}
+$result = mysqli_query($con, $sql_tasks);
+?>
+
+<?php 
+if($result=mysqli_query($con,$sql_tasks)){
+  $numTask=mysqli_num_rows( $result );
+}
+if($result=mysqli_query($con,$sql_appointment)){
+  $numAppointment=mysqli_num_rows( $result );
+}
+    function staff_notif($numTask, $numAppointment){
+      echo "<script>";
+      echo "alert('You currently have: ".$numTask." Tasks and ".$numAppointment." Appointments Today')";
+      echo "</script>";
+    };
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +44,7 @@ include("../assets/php-scripts/config.php");
 
 <!-- head.php contain all the necessary assets such as .css & .js files -->
 <?php include("head.php") ?>
-
+<?php staff_notif($numTask, $numAppointment) ?>
 <body class="g-sidenav-show  bg-gray-100">
   <?php include("sidebar.php")?>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -61,10 +89,7 @@ include("../assets/php-scripts/config.php");
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <!-- <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
-              </a> -->
+            <!-- <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-bell cursor-pointer" aria-hidden="true"></i>
               </a>
@@ -136,7 +161,7 @@ include("../assets/php-scripts/config.php");
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -147,28 +172,6 @@ include("../assets/php-scripts/config.php");
         <h4>Welcome Back, <?=$_SESSION['name']?>!</h4>
       </div>
       <div class="row">
-        <!-- <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
-                    <h5 class="font-weight-bolder mb-0">
-                      $53,000
-                      <span class="text-success text-sm font-weight-bolder">+55%</span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
             <div class="card-body p-3">
@@ -340,18 +343,6 @@ include("../assets/php-scripts/config.php");
                     ?></span> this month
                   </p>
                 </div>
-                <!-- <div class="col-lg-6 col-5 my-auto text-end">
-                  <div class="dropdown float-lg-end pe-4">
-                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-v text-secondary"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                </div> -->
               </div>
             </div>
             <div class="card-body ">
@@ -389,8 +380,6 @@ include("../assets/php-scripts/config.php");
                       else {
                         echo "0 results";
                       }
-
-                      mysqli_close($conn);
                       ?>
                   </tbody>
                 </table>
@@ -401,7 +390,7 @@ include("../assets/php-scripts/config.php");
         <div class="col-lg-4 col-md-6">
           <div class="card h-100">
             <div class="card-header pb-0">
-              <h6>Upcoming Reminders</h6>
+              <h6>Current Tasks</h6>
               <!-- <p class="text-sm">
                 <i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
                 <span class="font-weight-bold">24%</span> this month
@@ -409,59 +398,32 @@ include("../assets/php-scripts/config.php");
             </div>
             <div class="card-body p-3">
               <div class="timeline timeline-one-side">
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-bell-55 text-success text-gradient"></i>
+                <?php 
+              $taskCount=0;
+              $result = mysqli_query($conn, $sql_tasks);
+              if (mysqli_num_rows($result) > 0) {
+                while($row = mysqli_fetch_assoc($result)){
+                  if($taskCount>=$recordsperpage-1){
+                    break;
+                  }
+                  echo("<div class='timeline-block mb-3'>
+                  <span class='timeline-step'>
+                    <i class='ni ni-bell-55 text-success text-gradient'></i>
                   </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">John Doe</h6>
-                    <p class="text-dark text-xs font-weight-bold mt-1 mb-0">Process Documents</p>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">22 DEC 7:20 PM</p>
+                  <div class='timeline-content'>
+                    <h6 class='text-dark text-sm font-weight-bold mb-0'>".$row['staffName']."</h6>
+                    <p class='text-dark text-xs font-weight-bold mt-1 mb-0'>".$row['description']."</p>
+                    <p class='text-secondary font-weight-bold text-xs mt-1 mb-0'>Due: ".$row['dueDate']."</p>
                   </div>
-                </div>
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-bell-55 text-success text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">George Washington</h6>
-                    <p class="text-dark text-xs font-weight-bold mt-1 mb-0">Meet Client</p>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 11 PM</p>
-                  </div>
-                </div>
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-bell-55 text-success text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">Mary Jane</h6>
-                    <p class="text-dark text-xs font-weight-bold mt-1 mb-0">Resolve Case #0001</p>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 9:34 PM</p>
-                  </div>
-                </div>
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-bell-55 text-success text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">John Doe</h6>
-                    <p class="text-dark text-xs font-weight-bold mt-1 mb-0">Process Documents</p>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">20 DEC 2:20 AM</p>
-                  </div>
-                </div>
-                <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="ni ni-bell-55 text-success text-gradient"></i>
-                  </span>
-                  <div class="timeline-content">
-                    <h6 class="text-dark text-sm font-weight-bold mb-0">Donald Trump</h6>
-                    <p class="text-dark text-xs font-weight-bold mt-1 mb-0">Meet Client</p>
-                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">18 DEC 4:54 AM</p>
-                  </div>
-                </div>
-                
+                </div>");
+                $taskCount++;
+                }
+              } 
+              else {
+                echo "0 results";
+              }
+              ?>
               </div>
-            </div>
           </div>
         </div>
       </div>

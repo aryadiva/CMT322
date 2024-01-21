@@ -76,10 +76,7 @@ $result = mysqli_query($con, $sql_tasks);
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <!-- <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
-              </a> -->
+            <!-- <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-bell cursor-pointer" aria-hidden="true"></i>
               </a>
@@ -151,7 +148,7 @@ $result = mysqli_query($con, $sql_tasks);
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -333,18 +330,6 @@ $result = mysqli_query($con, $sql_tasks);
                     ?></span> this month
                   </p>
                 </div>
-                <!-- <div class="col-lg-6 col-5 my-auto text-end">
-                  <div class="dropdown float-lg-end pe-4">
-                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-v text-secondary"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                </div> -->
               </div>
             </div>
             <div class="card-body ">
@@ -401,7 +386,7 @@ $result = mysqli_query($con, $sql_tasks);
               $result = mysqli_query($conn, $sql_tasks);
               if (mysqli_num_rows($result) > 0) {
                 while($row = mysqli_fetch_assoc($result)){
-                  if($taskCount>=$recordsperpage){
+                  if($taskCount>=$recordsperpage-1){
                     break;
                   }
                   echo("<div class='timeline-block mb-3'>
@@ -410,8 +395,8 @@ $result = mysqli_query($con, $sql_tasks);
                   </span>
                   <div class='timeline-content'>
                     <h6 class='text-dark text-sm font-weight-bold mb-0'>".$row['staffName']."</h6>
-                    <p class='text-dark text-xs font-weight-bold mt-1 mb-0'>Process Documents</p>
-                    <p class='text-secondary font-weight-bold text-xs mt-1 mb-0'>22 DEC 7:20 PM</p>
+                    <p class='text-dark text-xs font-weight-bold mt-1 mb-0'>".$row['description']."</p>
+                    <p class='text-secondary font-weight-bold text-xs mt-1 mb-0'>Due: ".$row['dueDate']."</p>
                   </div>
                 </div>");
                 $taskCount++;

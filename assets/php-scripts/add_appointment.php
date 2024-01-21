@@ -10,7 +10,7 @@ include("config.php");
          
         // Performing insert query execution
         // here our table name is college
-        $sql = "INSERT INTO users VALUES 
+        $sql = "INSERT INTO appointment VALUES 
                 ('','$caseName','$clientName','$clientEmail','$staff','$date')";
          
         if(mysqli_query($con, $sql)){

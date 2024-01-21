@@ -199,6 +199,7 @@ $result = mysqli_query($con, $sql);
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">client email</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">staff in charge</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">date</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">modify</th>
                     </tr>
                   </thead>
                   <tbody>
