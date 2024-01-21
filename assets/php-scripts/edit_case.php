@@ -31,6 +31,12 @@ $row=mysqli_fetch_array($query);
                       charge</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">judge
                     </th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">date
+                      created</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">status
+                    </th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">document
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -49,33 +55,21 @@ $row=mysqli_fetch_array($query);
                           value="<?php echo($row['staff']) ?>" required></td>
                       <td class="text-center"><input type="text" name="judge" id="judge"
                           value="<?php echo($row['judge']) ?>" required></td>
+                      <td class="text-center"><input type="date" name="date_created" id="dateCreated"
+                          value="<?php echo($row['date_created']) ?>" required></td>
+                      <td class="text-center"><select name="status" id="status" required>
+                          <option value="Ongoing">Ongoing</option>
+                          <option value="Completed">Completed</option>
+                        </select></td>
+                      <td class="text-center"><input type="file" name="doc_name" id="doc_name"
+                          value="<?php echo($row['doc_name']) ?>" accept=".pdf, .docx, .xlsx, .jpeg"
+                          value="<?php echo($row['doc_name']) ?>" required></td>
+                      <td class="text-center"><input type="submit" value="Update"></td>
                     </tr>
                   </form>
                 </tbody>
               </table>
               <br>
-              <table>
-                <thead>
-                  <tr>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">date
-                      created</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">status
-                    </th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">document
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <td class="text-center"><input type="date" name="date_created" id="dateCreated" value="<?php echo($row['date_created']) ?>" required></td>
-                  <td class="text-center"><select name="status" id="status" required>
-                      <option value="Ongoing">Ongoing</option>
-                      <option value="Completed">Completed</option>
-                    </select></td>
-                  <td class="text-center"><input type="file" name="doc_name" id="doc_name"
-                      value="<?php echo($row['doc_name']) ?>" accept=".pdf, .docx, .xlsx, .jpeg" required></td>
-                  <td class="text-center"><input type="submit" value="Update"></td>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>

@@ -23,6 +23,7 @@ $result = mysqli_query($con, $sql);
 
 <body class="g-sidenav-show  bg-gray-100">
   <?php include("sidebar.php");?>
+  <?php echo ini_get("session.gc_maxlifetime"); ?>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
@@ -65,7 +66,7 @@ $result = mysqli_query($con, $sql);
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+            <!-- <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-bell cursor-pointer"></i>
               </a>
@@ -137,7 +138,7 @@ $result = mysqli_query($con, $sql);
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>

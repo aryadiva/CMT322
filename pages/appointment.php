@@ -71,7 +71,7 @@ $result = mysqli_query($con, $sql);
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+            <!-- <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-bell cursor-pointer"></i>
               </a>
@@ -143,7 +143,7 @@ $result = mysqli_query($con, $sql);
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
