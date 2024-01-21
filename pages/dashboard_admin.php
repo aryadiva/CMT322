@@ -17,12 +17,12 @@ $startFrom = ($currpage - 1) * $recordsperpage;
 $userName=$_SESSION['name'];
 // Fetch data from the database
 if($_SESSION['u_role']=="Admin"){
-  $sql = "SELECT * FROM tasks LIMIT $startFrom, $recordsperpage";
+  $sql_tasks = "SELECT * FROM tasks LIMIT $startFrom, $recordsperpage";
 }
 elseif($_SESSION['u_role']=="Staff"){
-  $sql = "SELECT * FROM tasks WHERE staffName='$userName' LIMIT $startFrom, $recordsperpage";
+  $sql_tasks = "SELECT * FROM tasks WHERE staffName='$userName' LIMIT $startFrom, $recordsperpage";
 }
-$result = mysqli_query($con, $sql);
+$result = mysqli_query($con, $sql_tasks);
 
 ?>
 
@@ -162,28 +162,6 @@ $result = mysqli_query($con, $sql);
         <h4>Welcome Back, <?=$_SESSION['name']?>!</h4>
       </div>
       <div class="row">
-        <!-- <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
-                    <h5 class="font-weight-bolder mb-0">
-                      $53,000
-                      <span class="text-success text-sm font-weight-bolder">+55%</span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
             <div class="card-body p-3">
@@ -340,7 +318,7 @@ $result = mysqli_query($con, $sql);
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h5><a href="case.php">Ongoing Cases</a></h6>
+                  <h6>Ongoing Cases</h6>
                   <p class="text-sm mb-0">
                     <!-- <i class="fa fa-check text-info" aria-hidden="true"></i> -->
                     <span class="font-weight-bold ms-0"><?php 
@@ -404,8 +382,6 @@ $result = mysqli_query($con, $sql);
                       else {
                         echo "0 results";
                       }
-
-                      mysqli_close($conn);
                       ?>
                   </tbody>
                 </table>
@@ -416,11 +392,36 @@ $result = mysqli_query($con, $sql);
         <div class="col-lg-4 col-md-6">
           <div class="card h-100">
             <div class="card-header pb-0">
-              <h6>Upcoming Reminders</h6>
+              <h6>Current Tasks</h6>
             </div>
-            <div class="card-body p-3">
+            <div class="card-body p-3"> 
               <div class="timeline timeline-one-side">
-                <div class="timeline-block mb-3">
+              <?php 
+              $taskCount=0;
+              $result = mysqli_query($conn, $sql_tasks);
+              if (mysqli_num_rows($result) > 0) {
+                while($row = mysqli_fetch_assoc($result)){
+                  if($taskCount>=$recordsperpage){
+                    break;
+                  }
+                  echo("<div class='timeline-block mb-3'>
+                  <span class='timeline-step'>
+                    <i class='ni ni-bell-55 text-success text-gradient'></i>
+                  </span>
+                  <div class='timeline-content'>
+                    <h6 class='text-dark text-sm font-weight-bold mb-0'>".$row['staffName']."</h6>
+                    <p class='text-dark text-xs font-weight-bold mt-1 mb-0'>Process Documents</p>
+                    <p class='text-secondary font-weight-bold text-xs mt-1 mb-0'>22 DEC 7:20 PM</p>
+                  </div>
+                </div>");
+                $taskCount++;
+                }
+              } 
+              else {
+                echo "0 results";
+              }
+              ?>
+                <!-- <div class="timeline-block mb-3">
                   <span class="timeline-step">
                     <i class="ni ni-bell-55 text-success text-gradient"></i>
                   </span>
@@ -469,7 +470,7 @@ $result = mysqli_query($con, $sql);
                     <p class="text-dark text-xs font-weight-bold mt-1 mb-0">Meet Client</p>
                     <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">18 DEC 4:54 AM</p>
                   </div>
-                </div>
+                </div> -->
                 
               </div>
             </div>
@@ -479,6 +480,7 @@ $result = mysqli_query($con, $sql);
       
     </div>
   </main>
+  <?php mysqli_close($conn); ?>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
@@ -638,9 +640,9 @@ $result = mysqli_query($con, $sql);
     new Chart(ctx2, {
       type: "line",
       data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
         datasets: [{
-            label: "Mobile apps",
+            label: "Active Clients",
             tension: 0.4,
             borderWidth: 0,
             pointRadius: 0,
@@ -648,22 +650,11 @@ $result = mysqli_query($con, $sql);
             borderWidth: 3,
             backgroundColor: gradientStroke1,
             fill: true,
-            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+            data: [50, 40, 300, 220, 500, 250, 400, 230, 500, 150, 100, 300],
             maxBarThickness: 6
 
           },
-          {
-            label: "Websites",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#3A416F",
-            borderWidth: 3,
-            backgroundColor: gradientStroke2,
-            fill: true,
-            data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-            maxBarThickness: 6
-          },
+          
         ],
       },
       options: {

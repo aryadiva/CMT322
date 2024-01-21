@@ -147,50 +147,47 @@ $result = mysqli_query($con, $sql);
       <div class="row">
         <div class="col-12">
           <?php 
-          if($_SESSION['u_role']=="Admin"){
-            echo("
-            <div class='card mb-4'>
+          if($_SESSION['u_role']=="Admin"){ ?>
+            <div class="card mb-4">
               <!-- put add button here -->
-              <div class='card-body px-0 pt-0 pb-2'>
-                <div class='table-responsive'>
-                  <table class='table align-items-center mb-0 '>
+              <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive">
+                  <table class="table align-items-center mb-0 ">
                     <thead>
                       <tr>
-                        <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                           username</th>
-                        <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>name
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">name
                         </th>
-                        <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                           password</th>
-                        <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                           email</th>
-                        <th class='text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>role
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">role
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <form action='../assets/php-scripts/add_user.php' method='post'>
+                      <form action="../assets/php-scripts/add_user.php" method="post">
                         <tr>
-                          <td class='text-center'><input type='text' name='userName' id='userName' required></td>
-                          <td class='text-center'><input type='text' name='u_name' id='name' required></td>
-                          <td class='text-center'><input type='password' name='u_pass' id='pass' required></td>
-                          <td class='text-center'><input type='email' name='user_email' id='email' required></td>
-                          <td class='text-center'><select name='role' id='role' required>
-                              <option value='Admin'>Admin</option>
-                              <option value='Staff'>Staff</option>
+                          <td class="text-center"><input type="text" name="userName" id="userName" required></td>
+                          <td class="text-center"><input type="text" name="u_name" id="name" required></td>
+                          <td class="text-center"><input type="password" name="u_pass" id="pass" required></td>
+                          <td class="text-center"><input type="email" name="user_email" id="email" required></td>
+                          <td class="text-center"><select name="role" id="role" required>
+                              <option value="Admin">Admin</option>
+                              <option value="Staff">Staff</option>
                           </td>
-                          <td class='text-center'><input type='submit' value='Add'></td>
+                          <td class="text-center"><input type="submit" value="Add"></td>
                         </tr>
                       </form>
-
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            ");
-          }
-          ?>
+            
+          <?php } ?>
           <div class="card mb-4">
             <!-- <div class="card-header pb-0">
               <h6>All Staff</h6>

@@ -27,9 +27,9 @@ $row=mysqli_fetch_array($query);
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="../assets/php-scripts/add_user.php" method="post">
+                    <form action="update_user.php?id=<?php echo $id?>" method="post">
                         <tr>
-                            <td class="text-center"><input type="text" name="username" id="userName"
+                            <td class="text-center"><input type="text" name="user_name" id="userName"
                                     value="<?php echo($row['userName']) ?>" required></td>
                             <td class="text-center"><input type="text" name="u_name" id="name"
                                     value="<?php echo($row['u_name']) ?>" required></td>

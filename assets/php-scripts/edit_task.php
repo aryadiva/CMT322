@@ -2,7 +2,7 @@
 include("config.php");
 
 $id=$_GET["id"];
-$sql="SELECT * from tasks WHERE staffID='$id'";
+$sql="SELECT * from tasks WHERE taskID='$id'";
 $query=mysqli_query($con,$sql);
 $row=mysqli_fetch_array($query);
 ?>
@@ -22,7 +22,7 @@ $row=mysqli_fetch_array($query);
                   </tr>
                 </thead>
                 <tbody>
-                  <form id ="editTaskForm" action="../assets/php-scripts/add_task.php?id=<?php echo $id?>" method="post" enctype="multipart/form-data">
+                  <form action="update_task.php?id=<?php echo $id?>" method="post">
                     <tr>
                       <td class="text-center"><input type="text" name="staff_name" id="staffName" value="<?php echo($row['staffName']) ?>" required></td>
                       <td class="text-center"><input type="text" name="description" id="description" value="<?php echo($row['description']) ?>" required></td>

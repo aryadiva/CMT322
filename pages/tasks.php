@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin'])) {
 	exit;
 }
 
-$recordsperpage=10;
+$recordsperpage=5;
 $currpage=isset($_GET['page']) ? $_GET['page'] : 1;
 $startFrom = ($currpage - 1) * $recordsperpage;
 
@@ -31,7 +31,7 @@ $result = mysqli_query($con, $sql);
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Case</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tasks</li>
           </ol>
           <h6 class="font-weight-bolder mb-0">Case</h6>
         </nav>
@@ -211,7 +211,8 @@ $result = mysqli_query($con, $sql);
                           <td> <div class='text-center'>".$row["dateCreated"]."</div> </td>
                           <td> <div class='text-center'>".$row["dueDate"]."</div> </td>
                           <td> <div class='text-center'>".$row["status"]."</div> </td>
-                          <td class='text-center text-secondary text-xs'> <a href='../assets/php-scripts/edit_tasks.php?id={$row['staffID']}'> / <a href=#>delete</a> </td>
+                          <td class='text-center text-secondary text-xs'> <a href='../assets/php-scripts/edit_task.php?id={$row['taskID']}'> edit </a>
+                          / <a href='../assets/php-scripts/delete_task.php?id={$row['taskID']}'> delete </a></td>
                           </tr>");
                         }
                       } 
@@ -224,7 +225,7 @@ $result = mysqli_query($con, $sql);
                 </table>
                 <div class="d-flex pagination py-3" style="justify-content: center">
                 <?php
-                  $totpages=ceil($con->query("SELECT COUNT(*) FROM client_case")->fetch_row()[0] / $recordsperpage);
+                  $totpages=ceil($con->query("SELECT COUNT(*) FROM tasks")->fetch_row()[0] / $recordsperpage);
                     for($i=1; $i<=$totpages; $i++){
                       if($i==$currpage){
                       echo "<a class='active' href='?page=$i'>$i</a>";
@@ -241,38 +242,7 @@ $result = mysqli_query($con, $sql);
           </div>
         </div>
       </div>
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <?php include("footer.php") ?>
     </div>
   </main>
   <div class="fixed-plugin">

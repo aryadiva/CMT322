@@ -13,10 +13,10 @@ include("../assets/php-scripts/config.php");
 
 $userName = $_SESSION['name'];
 
-$stmt = $con->prepare("SELECT u_name, email, userID FROM users WHERE u_name = ?");
+$stmt = $con->prepare("SELECT u_name, email, userID, u_role FROM users WHERE u_name = ?");
 $stmt->bind_param('s', $userName);
 $stmt->execute();
-$stmt->bind_result($u_name, $email, $userID);
+$stmt->bind_result($u_name, $email, $userID, $u_role);
 $stmt->fetch();
 
 ?>
@@ -101,6 +101,7 @@ $stmt->fetch();
               <div class="h-100">
               <?php
                   echo "<h5>$u_name</h5>";
+                  echo "<h6>$u_role</h6>";
                   $stmt->close();
                   mysqli_close($con);
               ?>

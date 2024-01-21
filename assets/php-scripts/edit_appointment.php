@@ -27,7 +27,7 @@ $row=mysqli_fetch_array($query);
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="../assets/php-scripts/add_appointment.php" method="post">
+                    <form action="update_appointment.php?id=<?php echo $id?>" method="post">
                         <tr>
                             <td class="text-center"><input type="text" name="caseName" id="caseName" value="<?php echo($row['caseName']) ?>" required></td>
                             <td class="text-center"><input type="text" name="clientName" id="clientName" value="<?php echo($row['clientName']) ?>" required></td>
