@@ -4,7 +4,13 @@
 
 ![Image](https://s3.amazonaws.com/creativetim_bucket/products/450/original/opt_sd_free_thumbnail.jpg?1617715816)
 
-Most complex and innovative Dashboard Made by [Creative Tim](https://creative-tim.com/). Check our latest Free Bootstrap 5 Dashboard.
+[**This web project was made thanks to Creative Tim for providing the basic groundworks design, frameworks and template of the website so my team can fully modify it as per our personal taste.**]
+
+[_This project was for educational purposes only and was made to fulfill a university course assignment requirement!_]
+
+----
+
+Most complex and innovative Dashboard Made by [Creative Tim](https://creative-tim.com/).
 
 Designed for those who like bold elements and beautiful websites. Made of hundred of elements, designed blocks and fully coded pages, Soft UI Dashboard is ready to help you create stunning websites and webapps.
 
